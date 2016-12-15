@@ -6,8 +6,14 @@
 </head>
 <body>
 
-<div class="container">
+Vue版 第一部分 获取数据
 
+<div class="container">
+    <div v-for="msg in list">
+        <p>{{msg.title}}</p>
+        <p>{{msg.content}}</p>
+        <p>{{msg.time}}</p>
+    </div>
 </div>
 
 <script src="//cdn.bootcss.com/vue/2.1.5/vue.min.js"></script>
