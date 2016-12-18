@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue版前端渲染</title>
+</head>
+<body>
+
+Vue版 第四部分 删除
+
+<div class="container">
+    <div>
+        <input type="text" v-model="searchContent">
+        <br>
+        <button type="button" v-on:click="getMessageFromServer">搜索</button>
+    </div>
+    <div>
+        <input type="text" v-model="title"><br/>
+        <textarea v-model="content"></textarea><br/>
+        <button v-on:click="postMessageToServer">提交</button>
+    </div>
+    <div v-for="msg in list">
+        <p>{{msg.title}}</p>
+        <p>{{msg.content}}</p>
+        <p>{{msg.time}}</p>
+        <button type="button" v-on:click="deleteMsgFromServer(msg)">删除</button>
+    </div>
+</div>
+
+<script src="//cdn.bootcss.com/vue/2.1.5/vue.min.js"></script>
+<script src="//cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
