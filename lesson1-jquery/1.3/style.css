@@ -1,0 +1,16 @@
+body {
+    text-align: center;
+    padding-top: 20px;
+}
+
+h1 {
+    margin: 20px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+input {
+    margin-bottom: 10px;
+}
