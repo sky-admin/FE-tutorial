@@ -14,3 +14,15 @@ button {
 input {
     margin-bottom: 10px;
 }
+
+.btn{
+    width: 80px;
+    height: 20px;
+    border: 1px solid #666;
+    background-color: darkgray;
+    display: inline-block;
+}
+
+.btn-disable{
+    background-color: #d3d3d3;
+}
