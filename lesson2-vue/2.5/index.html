@@ -25,8 +25,8 @@ Vue版 第五部分 分页
         <p>{{msg.time}}</p>
         <button type="button" v-on:click="deleteMsgFromServer(msg)">删除</button>
     </div>
-    <button v-on:click="lastPage">上一页</button>
-    <button v-on:click="nextPage">下一页</button>
+    <button v-on:click="lastPage" v-if="hasPre">上一页</button>
+    <button v-on:click="nextPage" v-if="hasNext">下一页</button>
 </div>
 
 <script src="//cdn.bootcss.com/vue/2.1.5/vue.min.js"></script>

@@ -10,8 +10,7 @@ new Vue({
         title: '',
         content: '',
         searchContent: '',
-        totleNum: 1,
-        offset: 0,
+        totalNum: 1,
         numberPerPage: 1,
         pageNum: 1
     },
@@ -29,6 +28,12 @@ new Vue({
                     offset: this.numberPerPage * (this.pageNum - 1)
                 }
             }
+        },
+        hasPre() {
+            return this.pageNum !== 1;
+        },
+        hasNext() {
+            return this.pageNum !== this.totalNum;
         }
     },
     methods: {
@@ -58,31 +63,27 @@ new Vue({
                 that.getMessageFromServer();
             })
         },
-        getTotalNumber(url) {
-            $.get({
-                url: url + 'count',
-                success(res) {
-                    // 获取总条数
-                    this.totalNum = parseInt(res.count / numberPerPage);
-                    console.log(queryParam);
-                }
+        getTotalNumber() {
+            let that = this;
+            this.$http.get('http://115.159.184.76:3001/api/comments/count').then(function (res) {
+                console.log(res.data);
+                that.totalNum = res.data.count;
             })
         },
         lastPage() {
-            this.pageNum--;
-            this.offset = this.numberPerPage * (this.pageNum - 1)
-            this.getMessageFromServer()
+                this.pageNum--;
+                this.getMessageFromServer();
         },
         nextPage() {
             this.pageNum++;
-            this.offset = this.numberPerPage * (this.pageNum - 1)
+            console.log(this.pageNum + '   ' + this.totalNum);
             this.getMessageFromServer()
         }
     },
 // 一个Vue实例是有完善的生命周期的，请阅读Vue官方文档，生命周期一节
-    created()
-    {
+    created(){
         this.getMessageFromServer();
+        this.getTotalNumber();
     }
 })
 ;
