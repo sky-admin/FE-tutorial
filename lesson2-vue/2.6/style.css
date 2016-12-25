@@ -58,6 +58,14 @@ article {
     text-align: right;
 }
 
+.page-area {
+    margin-bottom: 20px;
+}
+
+.page-area .btn {
+    width: auto;
+}
+
 
 
 /* 小屏幕（平板，大于等于 768px） */

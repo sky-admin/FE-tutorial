@@ -22,17 +22,21 @@
     </div>
     <button class="btn btn-success" style="margin-bottom: 25px" v-if="!showPostNew" v-on:click="showPostNew = !showPostNew">发布新的留言</button>
     <div class="new-area form-group" v-if="showPostNew">
-        <input class="form-control" type="text" v-model="title"><br/>
-        <textarea class="form-control" v-model="content"></textarea><br/>
+        <input placeholder="标题" style="margin-bottom: 5px" class="form-control" type="text" v-model="title">
+        <textarea placeholder="内容" style="margin-bottom: 5px" class="form-control" v-model="content"></textarea>
         <button class="btn btn-success" v-on:click="postMessageToServer">提交</button>
     </div>
     <div class="comment-area">
-        <div class="card" v-for="msg in list">
+        <div class="card" v-for="msg in list" track-by="$index">
             <h4 class="comment-title">{{msg.title}}</h4>
             <p class="comment-content">{{msg.content}}</p>
             <p class="comment-time">{{msg.time}}</p>
             <button class="btn btn-danger" type="button" v-on:click="deleteMsgFromServer(msg)">删除</button>
         </div>
+    </div>
+    <div class="page-area">
+        <button class="btn btn-info" v-on:click="lastPage" v-if="hasPre">上一页</button>
+        <button class="btn btn-info" v-on:click="nextPage" v-if="hasNext">下一页</button>
     </div>
 </article>
 

@@ -10,7 +10,10 @@ new Vue({
         title: '',
         content: '',
         searchContent: '',
-        showPostNew: false
+        showPostNew: false,
+        totalPage: 1,
+        numberPerPage: 3,
+        pageNum: 1
     },
     computed: {
         filterParam() {
@@ -20,41 +23,71 @@ new Vue({
                         title: {
                             regexp: '/' + this.searchContent + '/'
                         }
-                    }
+                    },
+                    order: 'time DESC',
+                    limit: this.numberPerPage,
+                    offset: this.numberPerPage * (this.pageNum - 1)
                 }
             }
+        },
+        hasPre() {
+            return this.pageNum !== 1;
+        },
+        hasNext() {
+            return this.pageNum !== this.totalPage;
         }
     },
     methods: {
         getMessageFromServer() {
             let that = this;
-            console.log(that.filterParam);
+            // console.log(that.filterParam);
             this.$http.get('http://115.159.184.76:3001/api/comments', {params: that.filterParam}).then(function (res) {
                 console.log(res.data);
                 that.list = res.data;
             })
         },
         postMessageToServer() {
+            let that = this;
             let param = {
                 title: this.title,
                 content: this.content,
                 time: Date()
             };
             this.$http.post('http://115.159.184.76:3001/api/comments', param).then(function (res) {
-                console.log(res.data);
+                // console.log(res.data);
+                that.title = '';
+                that.content = '';
+                that.showPostNew = false;
                 this.getMessageFromServer();
             });
         },
         deleteMsgFromServer(msg) {
             let that = this;
             this.$http.delete('http://115.159.184.76:3001/api/comments/' + msg.id).then(function (res) {
-                console.log(res);
+                // console.log(res);
                 that.getMessageFromServer();
             })
+        },
+        getTotalNumber() {
+            let that = this;
+            this.$http.get('http://115.159.184.76:3001/api/comments/count').then(function (res) {
+                console.log(res.data);
+                that.totalPage = Math.ceil(res.data.count / that.numberPerPage);
+            })
+        },
+        lastPage() {
+            this.pageNum--;
+            this.getMessageFromServer();
+        },
+        nextPage() {
+            this.pageNum++;
+            console.log(this.pageNum + '   ' + this.totalPage);
+            this.getMessageFromServer()
         }
     },
     // 一个Vue实例是有完善的生命周期的，请阅读Vue官方文档，生命周期一节
     created() {
         this.getMessageFromServer();
+        this.getTotalNumber();
     }
 });
