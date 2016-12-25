@@ -1,0 +1,82 @@
+html, body {
+    height: 100%;
+    background-color: #F4FFE2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 微软雅黑;
+    text-align: center;
+}
+
+header {
+    text-align: center;
+    background-color: #261E47;
+    color: white;
+    padding: 10px 0;
+}
+
+article {
+    background-color: #ACf0F2;
+    min-height: 100%;
+}
+
+.btn {
+    width: 100%;
+}
+
+.search-btn {
+    margin-top: 5px;
+}
+
+.search-area {
+    margin: 10px 0;
+}
+
+.new-area {
+    margin: 10px 0 20px 0;
+}
+
+.card {
+    background-color: #1695a3;
+    padding: 10px;
+    margin: 5px 0;
+    color: white;
+}
+
+.comment-title {
+    margin: 0 0 8px 0;
+}
+
+.comment-content {
+    text-align: left;
+    text-indent: 32px;
+}
+
+.comment-time {
+    text-align: right;
+}
+
+
+
+/* 小屏幕（平板，大于等于 768px） */
+@media (min-width: 768px) {
+    .btn {
+        width: auto;
+    }
+
+    .search-btn {
+        margin-top: 0;
+    }
+}
+
+/* 中等屏幕（桌面显示器，大于等于 992px） */
+@media (min-width: 992px) {
+
+}
+
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+@media (min-width: 1200px) {
+
+}
