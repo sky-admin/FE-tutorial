@@ -7,21 +7,23 @@ $(function () {
     let remoteUrl = 'http://115.159.184.76:3001/api/comments/';
 
     let searchContent = '';
-    let numberPerPage = 5;
+    let numberPerPage = 1;
     let pageNum = 1;
 
     let queryParam = {
         filter: {
-            where: {
-                title: '//'
-            },
+            // where: {
+            //     title: '//'
+            // },
             order: 'DESC',
-            limit: 10,
-            offset: 10 * (pageNum - 1)
+            limit: numberPerPage,
+            offset: numberPerPage * (pageNum - 1)
         }
     };
 
-    getTotalNumber(remoteUrl, numberPerPage);
+    getCommentFromServer(queryParam);
+
+    getTotalNumber(remoteUrl, pageNum, numberPerPage, queryParam);
 
     $('#searchBtn').on('click', function () {
         queryParam = getQueryParam();
@@ -35,17 +37,47 @@ $(function () {
 
 });
 
-function getTotalNumberFinish() {
-    getCommentFromServer(queryParam);
-}
-
-function getTotalNumber(url, numberPerPage) {
+function getTotalNumber(url, pageNum, numberPerPage, queryParam) {
     $.get({
         url: url + 'count',
         success(res) {
             // 获取总条数
-            let pageNum = parseInt(res.count / numberPerPage);
-            getTotalNumberFinish();
+            let totalNum = parseInt(res.count / numberPerPage);
+            console.log(queryParam);
+            addPageNum(pageNum, numberPerPage, totalNum, queryParam);
+            subPageNum(pageNum, numberPerPage, totalNum, queryParam);
+        }
+    })
+}
+
+function addPageNum(pageNum, numberPerPage, totleNum, queryParam) {
+    console.log(queryParam);
+    $('#next').click(function () {
+        if (pageNum == totleNum) {
+            $('#next').addClass('btn-disable');
+            $('#next').attr('disabled', 'disabled');
+        } else {
+            $('#next').removeAttr("disabled");;
+            $('#last').removeAttr("disabled");;
+            pageNum++;
+            queryParam.filter.offset = (pageNum - 1) * numberPerPage;
+            getCommentFromServer(queryParam);
+        }
+    })
+}
+
+function subPageNum(pageNum, numberPerPage, totleNum, queryParam) {
+    console.log(queryParam);
+    $('#last').click(function () {
+        if (pageNum == 1) {
+            $('#last').addClass('btn-disable');
+            $('#last').attr('disabled', 'disabled');
+        } else {
+            $('#next').removeAttr("disabled");;
+            $('#last').removeAttr("disabled");;
+            pageNum--;
+            queryParam.filter.offset = (pageNum - 1) * numberPerPage;
+            getCommentFromServer(queryParam);
         }
     })
 }
@@ -86,7 +118,7 @@ function getCommentFromServer(queryParam) {
             $('button.delete').each(function () {
                 $(this).click(function () {
                     let id = $(this)[0].id;
-                    console.log(id)
+                    // console.log(id)
                     deleteComment(id.toString());
                 })
             })
